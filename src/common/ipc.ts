@@ -9,4 +9,4 @@ export const checkValidIso = makeEndpoint.main(
   <{ path: string; valid: boolean }>_,
 );
 
-export const notifyOfUpdate = makeEndpoint.main("notifyOfEndpoint", <EmptyPayload>_, <SuccessPayload>_);
+export const notifyOfUpdate = makeEndpoint.main("notifyOfUpdate", <EmptyPayload>_, <SuccessPayload>_);

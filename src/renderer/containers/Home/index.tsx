@@ -22,7 +22,8 @@ const Outer = styled.div`
 
 export const Home: React.FC = () => {
   notifyOfUpdate.renderer!.trigger(async ({}) => {
-    console.log("test");
+    // From here, give the user a notification via in-app notifiation or indicator
+    console.log("This is a test log");
   });
 
   return (
