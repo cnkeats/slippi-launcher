@@ -22,7 +22,7 @@ import { notifyOfUpdate } from "common/ipc";
 autoUpdater.logger = log;
 autoUpdater.on("update-available", () => {
   // Tell the renderer that there is an update available
-  notifyOfUpdate.renderer!.trigger({});
+  notifyOfUpdate.main!.trigger({ message: "Hey there is an update available!" });
 });
 //autoUpdater.checkForUpdatesAndNotify().catch(log.warn);
 
