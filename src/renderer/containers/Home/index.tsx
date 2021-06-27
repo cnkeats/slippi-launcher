@@ -10,6 +10,8 @@ import { Footer } from "@/components/Footer";
 import { NewsFeed } from "./NewsFeed";
 import { SideBar } from "./SideBar";
 
+import { notifyOfUpdate } from "common/ipc";
+
 const Outer = styled.div`
   display: flex;
   flex-flow: column;
@@ -19,6 +21,10 @@ const Outer = styled.div`
 `;
 
 export const Home: React.FC = () => {
+  notifyOfUpdate.renderer!.trigger(async ({}) => {
+    console.log("test");
+  });
+
   return (
     <Outer>
       <div

@@ -16,9 +16,15 @@ import { download } from "./download";
 import { fileExists } from "./fileExists";
 import { setupListeners } from "./listeners";
 
+import { notifyOfUpdate } from "common/ipc";
+
 // Check for updates
 autoUpdater.logger = log;
-autoUpdater.checkForUpdatesAndNotify().catch(log.warn);
+autoUpdater.on("update-available", () => {
+  // Do some shit here
+  notifyOfUpdate.renderer!.trigger({});
+});
+//autoUpdater.checkForUpdatesAndNotify().catch(log.warn);
 
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: BrowserWindow | null = null;
@@ -46,7 +52,7 @@ function createMainWindow() {
     autoHideMenuBar: true,
   });
 
-  if (isDevelopment) {
+  if (isDevelopment || true) {
     window.webContents.openDevTools();
 
     // Enable context menu for inspecting elements
