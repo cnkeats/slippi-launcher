@@ -18,14 +18,6 @@ import { setupListeners } from "./listeners";
 
 import { notifyOfUpdate } from "common/ipc";
 
-// Check for updates
-autoUpdater.logger = log;
-autoUpdater.on("update-available", () => {
-  // Tell the renderer that there is an update available
-  notifyOfUpdate.main!.trigger({ message: "Hey there is an update available!" });
-});
-//autoUpdater.checkForUpdatesAndNotify().catch(log.warn);
-
 // global reference to mainWindow (necessary to prevent window from being garbage collected)
 let mainWindow: BrowserWindow | null = null;
 let didFinishLoad = false;
@@ -52,7 +44,7 @@ function createMainWindow() {
     autoHideMenuBar: true,
   });
 
-  if (isDevelopment || true) {
+  if (isDevelopment || 1 == 1) {
     window.webContents.openDevTools();
 
     // Enable context menu for inspecting elements
@@ -89,9 +81,27 @@ function createMainWindow() {
   });
 
   window.once("ready-to-show", () => {
+    log.error("Window ready to show!");
     didFinishLoad = true;
     window.show();
     window.focus();
+
+    // Check for updates
+    autoUpdater.logger = log;
+
+    //autoUpdater.checkForUpdatesAndNotify().catch(log.warn);
+    log.info("Log before checking for updates");
+    autoUpdater
+      .checkForUpdates()
+      .then(async (obj) => {
+        log.info("Log after checking for updates");
+        log.info(obj);
+        notifyOfUpdate.main!.trigger({ message: "Hey there is an update available!" });
+      })
+      .catch(async (obj) => {
+        log.error("Caught an error checking for updates :(");
+        log.info(obj);
+      });
   });
 
   setupListeners();
